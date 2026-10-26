@@ -23,8 +23,7 @@ def base32_encode(data: bytes) -> bytes:
     if not data:
         return b""
     binary_data = "".join(bin(byte)[2:].zfill(8) for byte in data)
-    remainder = len(binary_data) % 5
-    if remainder != 0:
+    if (remainder := len(binary_data) % 5) != 0:
         binary_data = binary_data + "0" * (5 - remainder)
     b32_chunks = [binary_data[i : i + 5] for i in range(0, len(binary_data), 5)]
     b32_result = "".join(B32_CHARSET[int(chunk, 2)] for chunk in b32_chunks)
