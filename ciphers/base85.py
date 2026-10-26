@@ -62,9 +62,7 @@ def ascii85_decode(data: bytes) -> bytes:
     b85_chunks = [binary_data[i : i + 5] for i in range(0, len(binary_data), 5)]
     b85_segments = [[ord(c) - 33 for c in chunk] for chunk in b85_chunks]
     results = [bin(_base85_to_10(chunk))[2:].zfill(32) for chunk in b85_segments]
-    byte_chunks = [
-        [int(r[j : j + 8], 2) for j in range(0, 32, 8)] for r in results
-    ]
+    byte_chunks = [[int(r[j : j + 8], 2) for j in range(0, 32, 8)] for r in results]
     raw_bytes = bytes(b for chunk in byte_chunks for b in chunk)
     return raw_bytes[:-null_values] if null_values > 0 else raw_bytes
 
